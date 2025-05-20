@@ -94,8 +94,8 @@ Each query in this section includes:
 Below are the queries used in this phase:
 
 ### Query 1: Data centers with active servers and average storage usage
-📄 Description: Retrieves all data centers that currently have active servers, counts how many active servers each has, and calculates the average storage usage per server. Results are ordered from most to least loaded.
-👤 Target User: DevOps teams, infrastructure managers, and analysts monitoring server usage and planning capacity.
+📄 Description: Retrieves all data centers that currently have active servers, counts how many active servers each has, and calculates the average storage usage per server. Results are ordered from most to least loaded.  
+👤 Target User: DevOps teams, infrastructure managers, and analysts monitoring server usage and planning capacity.  
 🕒 When: Before system upgrades, during incident analysis, or for periodic reporting.
 
 📸 Screenshot:
