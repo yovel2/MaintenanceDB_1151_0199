@@ -93,7 +93,7 @@ Each query in this section includes:
 
 Below are the queries used in this phase:
 
-# Query 1: Data centers with active servers and average storage usage
+### Query 1: Data centers with active servers and average storage usage
 📄 Description: Retrieves all data centers that currently have active servers, counts how many active servers each has, and calculates the average storage usage per server. Results are ordered from most to least loaded.
 👤 Target User: DevOps teams, infrastructure managers, and analysts monitoring server usage and planning capacity.
 🕒 When: Before system upgrades, during incident analysis, or for periodic reporting.
@@ -102,14 +102,14 @@ Below are the queries used in this phase:
 
 
 
-# Query 2: Average latency and packet loss by device type
+### Query 2: Average latency and packet loss by device type
 📄 Description: Calculates average session latency and packet loss by device type (e.g., phone, TV), based on session start/end data.
 👤 Target User: UX teams, product managers, and network engineers optimizing performance per platform.
 🕒 When: During streaming experience analysis or cross-platform performance reviews.
 📸 Screenshot:
 ![Q2](https://github.com/user-attachments/assets/f87732a8-bc03-4b01-b8cc-05f59cd31120)
 
-# Query 3: Active servers with more than 100 sessions this week
+### Query 3: Active servers with more than 100 sessions this week
 📄 Description: Displays active servers that had over 100 sessions in the past 7 days.
 👤 Target User: Infrastructure managers and DevOps identifying heavy traffic and potential scaling needs.
 🕒 When: In weekly performance analysis or for proactive load management.
@@ -117,7 +117,7 @@ Below are the queries used in this phase:
 ![Q3](https://github.com/user-attachments/assets/3daf54cc-2297-452f-8ca8-14e24c00e4c3)
 
 
-# Query 4: Critical errors on currently active servers
+### Query 4: Critical errors on currently active servers
 📄 Description: Lists serious errors that occurred on servers that are still active (i.e., not shut down).
 👤 Target User: NOC teams and infrastructure leads addressing critical ongoing issues.
 🕒 When: In real-time alerts or during incident post-mortems.
@@ -125,7 +125,7 @@ Below are the queries used in this phase:
 ![Q4](https://github.com/user-attachments/assets/cb9b8ae7-6736-4fec-84ed-34eab886f6c6)
 
 
-# Query 5: Top 5 servers with most maintenance records in the last year
+### Query 5: Top 5 servers with most maintenance records in the last year
 📄 Description: Identifies the five servers that have undergone the most maintenance actions in the past 12 months.
 👤 Target User: Infrastructure and asset managers reviewing long-term server reliability.
 🕒 When: For budgeting, equipment lifecycle planning, or replacement decisions.
@@ -133,7 +133,7 @@ Below are the queries used in this phase:
 ![Q5](https://github.com/user-attachments/assets/29c627ea-db91-4e88-ab19-f02344456b54)
 
 
-# Query 6: Average daily incoming/outgoing traffic over the last month
+### Query 6: Average daily incoming/outgoing traffic over the last month
 📄 Description: Shows the daily average of inbound and outbound traffic per day in the last month.
 👤 Target User: Performance monitoring teams and analysts watching for unusual traffic spikes.
 🕒 When: During network diagnostics or usage pattern analysis.
@@ -141,7 +141,7 @@ Below are the queries used in this phase:
 ![Q6](https://github.com/user-attachments/assets/c2144f08-1dcb-4781-8411-600f717dc079)
 
 
-# Query 7: Sessions with more than 3 buffering events by video quality
+### Query 7: Sessions with more than 3 buffering events by video quality
 📄 Description: Analyzes which video qualities (e.g., 4K, HD) experience frequent buffering, by listing sessions with 3+ buffering events.
 👤 Target User: Streaming optimization teams focusing on encoding and quality-performance trade-offs.
 🕒 When: During codec upgrades, platform tuning, or device-specific testing.
@@ -149,7 +149,7 @@ Below are the queries used in this phase:
 ![Q7](https://github.com/user-attachments/assets/24d6279a-784c-4b3e-a1c6-0e5228185ac9)
 
 
-# Query 8: Server resource summary by operational status
+### Query 8: Server resource summary by operational status
 📄 Description: Aggregates the number of servers, memory, and storage capacity based on server status (active, offline, etc.).
 👤 Target User: Infrastructure and finance teams assessing utilized vs. idle resources.
 🕒 When: Before procurement or capacity forecasting.
@@ -166,7 +166,7 @@ For each, we provide:
 📸 Screenshot 1: Table before the update/delete
 📸 Screenshot 2: Query execution + Table after the update/delete
 
-# 2.1 UPDATE Queries
+### 2.1 UPDATE Queries
 🔄 Update Query 1: Update Server Status After Maintenance
 SQL Purpose: Change server status from “Decommissioned” to “Active”.
 Why It's Needed: To mark the server as available after successful maintenance.
@@ -205,7 +205,7 @@ When: After detecting anomalies or during test simulations.
 ![U3-after](https://github.com/user-attachments/assets/529836bf-19e0-468a-b48a-def80e8e8136)
 
 
-# 2.2 DELETE Queries
+### 2.2 DELETE Queries
 🗑️ Delete Query 1: Remove Old Maintenance Records
 SQL Purpose: Delete maintenance records older than two years.
 Why It's Needed: To reduce database size and improve performance.
@@ -246,7 +246,7 @@ When: After retiring the server or completing test cycles.
 
 
 
-3️⃣ Transaction Control (COMMIT & ROLLBACK)
+## 3️⃣ Transaction Control (COMMIT & ROLLBACK)
 We demonstrated the use of transactions in SQL:
 
 🔄 ROLLBACK Demo
@@ -266,11 +266,11 @@ We demonstrated the use of transactions in SQL:
 ![image](https://github.com/user-attachments/assets/742ac558-f5d7-4461-9ddc-594b93919dd4)
 
 
-4️⃣ Constraints
+## 4️⃣ Constraints
 We added 3 types of constraints (NOT NULL, CHECK, DEFAULT) using ALTER TABLE.
 
 
-# 1. NOT NULL Constraint – Servers.Status
+### 1. NOT NULL Constraint – Servers.Status
 🧾 Description: We enforced that every server must have a defined status (e.g., Active, Inactive, UnderMaintenance) by disallowing NULLs in the Status column.
 
 📸 ALTER TABLE command:
@@ -280,7 +280,7 @@ We added 3 types of constraints (NOT NULL, CHECK, DEFAULT) using ALTER TABLE.
 ![image](https://github.com/user-attachments/assets/87b27a2f-4eb1-46d6-bf12-a30b8b5e31fb)
 
 
-#  2. CHECK Constraint – StreamingSessions.BufferEvents
+###  2. CHECK Constraint – StreamingSessions.BufferEvents
 🧾 Description: We enforced that every server must have a defined status (e.g., Active, Inactive, UnderMaintenance) by disallowing NULLs in the Status column.
 
 📸 ALTER TABLE command:
@@ -291,7 +291,7 @@ We added 3 types of constraints (NOT NULL, CHECK, DEFAULT) using ALTER TABLE.
 
 
 
-# 3. DEFAULT Constraint – ErrorLogs.Severity
+### 3. DEFAULT Constraint – ErrorLogs.Severity
 🧾 Description: We set a default value of 'Medium' for the Severity column, so that if no severity is provided, 'Medium' is used automatically.
 
 📸 ALTER TABLE command:
