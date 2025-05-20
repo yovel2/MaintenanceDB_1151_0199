@@ -1,5 +1,3 @@
-![image](https://github.com/user-attachments/assets/b4920214-311c-490b-a27e-7457d342a854)# MaintenanceDB_1151_0199
-
 # 👥 Team:
 
 Yair Levi - 213200199
