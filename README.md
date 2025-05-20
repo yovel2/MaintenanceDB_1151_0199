@@ -97,6 +97,7 @@ Below are the queries used in this phase:
 📄 Description: Retrieves all data centers that currently have active servers, counts how many active servers each has, and calculates the average storage usage per server. Results are ordered from most to least loaded.
 👤 Target User: DevOps teams, infrastructure managers, and analysts monitoring server usage and planning capacity.
 🕒 When: Before system upgrades, during incident analysis, or for periodic reporting.
+
 📸 Screenshot:
 ![Q1](https://github.com/user-attachments/assets/5cff9f87-1d23-4423-a3a1-06bd564505e0)
 
@@ -106,6 +107,7 @@ Below are the queries used in this phase:
 📄 Description: Calculates average session latency and packet loss by device type (e.g., phone, TV), based on session start/end data.
 👤 Target User: UX teams, product managers, and network engineers optimizing performance per platform.
 🕒 When: During streaming experience analysis or cross-platform performance reviews.
+
 📸 Screenshot:
 ![Q2](https://github.com/user-attachments/assets/f87732a8-bc03-4b01-b8cc-05f59cd31120)
 
@@ -113,6 +115,7 @@ Below are the queries used in this phase:
 📄 Description: Displays active servers that had over 100 sessions in the past 7 days.
 👤 Target User: Infrastructure managers and DevOps identifying heavy traffic and potential scaling needs.
 🕒 When: In weekly performance analysis or for proactive load management.
+
 📸 Screenshot:
 ![Q3](https://github.com/user-attachments/assets/3daf54cc-2297-452f-8ca8-14e24c00e4c3)
 
@@ -121,6 +124,7 @@ Below are the queries used in this phase:
 📄 Description: Lists serious errors that occurred on servers that are still active (i.e., not shut down).
 👤 Target User: NOC teams and infrastructure leads addressing critical ongoing issues.
 🕒 When: In real-time alerts or during incident post-mortems.
+
 📸 Screenshot:
 ![Q4](https://github.com/user-attachments/assets/cb9b8ae7-6736-4fec-84ed-34eab886f6c6)
 
@@ -129,6 +133,7 @@ Below are the queries used in this phase:
 📄 Description: Identifies the five servers that have undergone the most maintenance actions in the past 12 months.
 👤 Target User: Infrastructure and asset managers reviewing long-term server reliability.
 🕒 When: For budgeting, equipment lifecycle planning, or replacement decisions.
+
 📸 Screenshot:
 ![Q5](https://github.com/user-attachments/assets/29c627ea-db91-4e88-ab19-f02344456b54)
 
@@ -137,6 +142,7 @@ Below are the queries used in this phase:
 📄 Description: Shows the daily average of inbound and outbound traffic per day in the last month.
 👤 Target User: Performance monitoring teams and analysts watching for unusual traffic spikes.
 🕒 When: During network diagnostics or usage pattern analysis.
+
 📸 Screenshot:
 ![Q6](https://github.com/user-attachments/assets/c2144f08-1dcb-4781-8411-600f717dc079)
 
@@ -145,6 +151,7 @@ Below are the queries used in this phase:
 📄 Description: Analyzes which video qualities (e.g., 4K, HD) experience frequent buffering, by listing sessions with 3+ buffering events.
 👤 Target User: Streaming optimization teams focusing on encoding and quality-performance trade-offs.
 🕒 When: During codec upgrades, platform tuning, or device-specific testing.
+
 📸 Screenshot:
 ![Q7](https://github.com/user-attachments/assets/24d6279a-784c-4b3e-a1c6-0e5228185ac9)
 
@@ -153,6 +160,7 @@ Below are the queries used in this phase:
 📄 Description: Aggregates the number of servers, memory, and storage capacity based on server status (active, offline, etc.).
 👤 Target User: Infrastructure and finance teams assessing utilized vs. idle resources.
 🕒 When: Before procurement or capacity forecasting.
+
 📸 Screenshot:
 ![Q8](https://github.com/user-attachments/assets/305c8958-39eb-4298-aa27-c961a356d54c)
 
