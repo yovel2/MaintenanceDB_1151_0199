@@ -450,6 +450,7 @@ We created 2 database views to provide simplified access to complex data relatio
 📄 Description: This query aggregates total downtime by country, providing management with insights into regional infrastructure reliability and helping prioritize investment in infrastructure improvements.
 
 📸 Query Screenshot:
+![שלנו2](https://github.com/user-attachments/assets/8f24f7b2-364f-475c-a85c-3561df0390d8)
 
 ---
 
