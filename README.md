@@ -424,7 +424,7 @@ We created 2 database views to provide simplified access to complex data relatio
 
 📸 Query Screenshot:
 
-![שלהם2](https://github.com/user-attachments/assets/4a377103-3a50-4a85-b1cd-ed6303ee75ce)
+![שלהם1](https://github.com/user-attachments/assets/54174f23-f145-4266-a3ff-5b7f0088bdac)
 
 #### Query 2 on View 1: User Ticket Volume Analysis
 📄 Description: This query analyzes the number of tickets per user, helping identify users who might need additional support or training, and detecting potential system issues affecting specific users.
