@@ -44,7 +44,12 @@ WHERE location = 'China'
   AND DowntimeMinutes > 60;
 
   
-SELECT ServerID, SUM(DowntimeMinutes) AS TotalDowntime
-FROM vw_ServerStatusAndDowntime
-GROUP BY ServerID
-ORDER BY TotalDowntime DESC;
+SELECT 
+    ServerID, 
+    COALESCE(SUM(DowntimeMinutes), 0) AS TotalDowntime
+FROM 
+    vw_ServerStatusAndDowntime
+GROUP BY 
+    ServerID
+ORDER BY 
+    TotalDowntime DESC;
