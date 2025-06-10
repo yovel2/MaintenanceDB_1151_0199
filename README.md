@@ -415,6 +415,7 @@ We created 2 database views to provide simplified access to complex data relatio
 📄 Description: This view combines data from Support_Tickets, User, and Issue_Types tables to provide a comprehensive overview of support tickets. It displays ticket details along with user information and issue classification, making it easier for support teams to understand the context of each ticket without writing complex joins.
 
 📸 View Creation Screenshot:
+
 ![view1](https://github.com/user-attachments/assets/415879f1-bd83-46b0-ad4d-9d8c666ff501)
 
 
@@ -422,12 +423,14 @@ We created 2 database views to provide simplified access to complex data relatio
 📄 Description: This query retrieves all tickets related to login problems, helping support teams quickly identify and prioritize authentication-related issues.
 
 📸 Query Screenshot:
+
 ![שלהם2](https://github.com/user-attachments/assets/4a377103-3a50-4a85-b1cd-ed6303ee75ce)
 
 #### Query 2 on View 1: User Ticket Volume Analysis
 📄 Description: This query analyzes the number of tickets per user, helping identify users who might need additional support or training, and detecting potential system issues affecting specific users.
 
 📸 Query Screenshot:
+
 ![שלהם2](https://github.com/user-attachments/assets/973a0ced-1a8a-475f-b7b7-525e494e68b3)
 
 
@@ -444,12 +447,14 @@ We created 2 database views to provide simplified access to complex data relatio
 📄 Description: This query identifies servers in China that experienced significant downtime (over 60 minutes), helping regional infrastructure teams focus on problematic servers that may need attention or replacement.
 
 📸 Query Screenshot:
+
 ![שלנו1](https://github.com/user-attachments/assets/c512c0f7-fb9d-4211-9be0-785a32b04da0)
 
 #### Query 2 on View 2: Total Downtime Analysis by Data Center Country
 📄 Description: This query aggregates total downtime by country, providing management with insights into regional infrastructure reliability and helping prioritize investment in infrastructure improvements.
 
 📸 Query Screenshot:
+
 ![שלנו2](https://github.com/user-attachments/assets/8f24f7b2-364f-475c-a85c-3561df0390d8)
 
 ---
