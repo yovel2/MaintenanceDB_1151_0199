@@ -313,3 +313,166 @@ We added 3 types of constraints (NOT NULL, CHECK, DEFAULT) using ALTER TABLE.
 
 ✅ End of Phase B Report
 
+
+
+## Netflix Project: maintenance - Phase C Report
+
+## 📑 Table of Contents
+
+1. Integration Overview
+2. Technical Support Database Analysis
+3. Database Integration Process
+4. Views Implementation
+5. Summary
+
+---
+
+## 🔗 Integration Overview
+
+In this phase, we integrated our streaming infrastructure database with the technical support department's database. This integration allows for a comprehensive view of both infrastructure maintenance and customer support operations, providing better insights into system performance and user experience correlation.
+
+### Main Objectives:
+
+* Analyze and integrate technical support database structure
+* Merge databases while maintaining data integrity
+* Create unified ERD and DSD diagrams
+* Implement database views for enhanced querying capabilities
+
+---
+
+## 🔍 Technical Support Database Analysis
+
+We received the backup file from the technical support department and analyzed its structure.
+
+### DSD Extraction
+📄 Description: We extracted the DSD (Data Structure Diagram) from the technical support backup file to understand their database schema.
+
+📸 Screenshot:
+![new_dsd](https://github.com/user-attachments/assets/12d6bb20-e100-42b8-8c72-bcfde3e6de22)
+
+### ERD Creation
+📄 Description: Based on the DSD, we created an ERD (Entity Relationship Diagram) to visualize the relationships in the technical support database.
+
+📸 Screenshot:
+![new_erd](https://github.com/user-attachments/assets/4776750d-9df8-44c4-9db8-ac7cf462519a)
+
+---
+
+## 🔧 Database Integration Process
+
+We performed the integration between our streaming infrastructure database and the technical support database with the following modifications:
+
+### Schema Changes Made:
+
+#### 1. Table Renaming
+**Change:** Renamed `support_agent` table to `worker` table
+**Reason:** To create a more general representation of employees that can handle both maintenance and support tasks
+
+#### 2. Attribute Removal
+**Change:** Removed the `performedBy` attribute from the `MaintenanceRecord` table
+**Reason:** This attribute was replaced with a proper foreign key relationship
+
+#### 3. Relationship Creation
+**Change:** Created a `performedBy` relationship between `MaintenanceRecord` and `worker` tables
+**Reason:** To establish a proper many-to-one relationship between maintenance records and workers
+
+
+### SQL Commands Used:
+
+```sql
+-- Rename table
+ALTER TABLE support_agent RENAME TO worker;
+
+-- Remove old attribute
+ALTER TABLE MaintenanceRecord DROP COLUMN performedBy;
+
+-- Add foreign key relationship
+ALTER TABLE MaintenanceRecord ADD COLUMN workerID INT;
+ALTER TABLE MaintenanceRecord ADD CONSTRAINT FK_MaintenanceRecord_Worker 
+FOREIGN KEY (workerID) REFERENCES worker(workerID);
+```
+
+### Integrated ERD
+📄 Description: The final ERD after integration, showing the unified database structure with both streaming infrastructure and technical support entities.
+
+📸 Screenshot:
+![shared_erd](https://github.com/user-attachments/assets/224ea567-42a4-4ac0-8f04-6c17568e4849)
+
+
+### Integrated DSD
+📄 Description: The complete DSD after integration, detailing all tables, attributes, and relationships in the unified system.
+
+📸 Screenshot:
+![shared_dsd](https://github.com/user-attachments/assets/8f1ae5e7-82ee-44d4-ac84-e87aa2b9e985)
+
+---
+
+## 👁️ Views Implementation
+
+We created 2 database views to provide simplified access to complex data relationships and frequently used queries.
+
+### View 1:  Technical Support Tickets with User and Issue Type Information
+📄 Description: This view combines data from Support_Tickets, User, and Issue_Types tables to provide a comprehensive overview of support tickets. It displays ticket details along with user information and issue classification, making it easier for support teams to understand the context of each ticket without writing complex joins.
+
+📸 View Creation Screenshot:
+![view1](https://github.com/user-attachments/assets/415879f1-bd83-46b0-ad4d-9d8c666ff501)
+
+
+#### Query 1 on View 1:  Filter Tickets by Issue Type
+📄 Description: This query retrieves all tickets related to login problems, helping support teams quickly identify and prioritize authentication-related issues.
+
+📸 Query Screenshot:
+![שלהם2](https://github.com/user-attachments/assets/4a377103-3a50-4a85-b1cd-ed6303ee75ce)
+
+#### Query 2 on View 1: User Ticket Volume Analysis
+📄 Description: This query analyzes the number of tickets per user, helping identify users who might need additional support or training, and detecting potential system issues affecting specific users.
+
+📸 Query Screenshot:
+![שלהם2](https://github.com/user-attachments/assets/973a0ced-1a8a-475f-b7b7-525e494e68b3)
+
+
+---
+
+### View 2: Server Status and Maintenance Downtime Summary
+📄 Description: This view integrates data from Servers, DataCenters, and MaintenanceRecords tables to provide a comprehensive overview of server infrastructure status and maintenance history. It helps infrastructure teams monitor server availability and track downtime patterns across different data centers.
+
+📸 View Creation Screenshot:
+![create שלנו](https://github.com/user-attachments/assets/e5e43e28-17c5-4b4b-b122-78760b887d34)
+
+
+#### Query 1 on View 2: High Downtime Servers in Specific Regions
+📄 Description: This query identifies servers in China that experienced significant downtime (over 60 minutes), helping regional infrastructure teams focus on problematic servers that may need attention or replacement.
+
+📸 Query Screenshot:
+![שלנו1](https://github.com/user-attachments/assets/c512c0f7-fb9d-4211-9be0-785a32b04da0)
+
+#### Query 2 on View 2: Total Downtime Analysis by Data Center Country
+📄 Description: This query aggregates total downtime by country, providing management with insights into regional infrastructure reliability and helping prioritize investment in infrastructure improvements.
+
+📸 Query Screenshot:
+
+---
+
+## 📊 Summary
+
+### Integration Benefits:
+* **Unified Data Model:** Combined infrastructure and support data for comprehensive analysis
+* **Improved Relationships:** Better representation of worker roles across departments
+* **Enhanced Querying:** Views provide simplified access to complex data relationships
+* **Data Consistency:** Proper foreign key relationships ensure data integrity
+
+### Technical Achievements:
+* Successfully merged two independent database systems
+* Maintained data integrity throughout the integration process
+* Created reusable views for common business queries
+* Established proper relationships between previously isolated data sets
+
+### Future Enhancements:
+* Additional views can be created for specific business requirements
+* Further normalization opportunities may be identified
+* Performance optimization through indexing on frequently queried columns
+
+---
+
+✅ End of Phase C Report
+
