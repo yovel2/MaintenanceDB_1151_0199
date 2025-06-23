@@ -8,9 +8,9 @@ Yovel Yehoshua - 213571151
 
 * Streaming Infrastructure maintenance Management System
 
-## Netflix Project: maintenance - Phase A Report
+# Netflix Project: maintenance - Phase A Report
 
-### 📑 Table of Contents
+## 📑 Table of Contents
 
 1. Introduction  
 2. ERD & DSD Diagrams  
@@ -20,11 +20,11 @@ Yovel Yehoshua - 213571151
 
 ---
 
-### 📘 Introduction
+## 📘 Introduction
 
 This project manages data for a global video streaming company that runs thousands of servers and data centers across the world. The system stores data about servers, streaming sessions, maintenance logs, traffic usage, and error logs. Our main goal is to track server performance, handle problems, and analyze streaming quality for users.
 
-#### Main Features:
+### Main Features:
 
 * Save and track details of servers and data centers.  
 * Store information about user streaming sessions.  
