@@ -243,11 +243,7 @@ When: Before reporting or cleaning noisy data.
 ![d2-before](https://github.com/user-attachments/assets/ae2ded03-2131-4c12-bb8d-c01842095d79)
 
 📸 Screenshot after delete:  
-![d2-after](https://github.com/user-attachments/assets/1690de37-2ad3-44ce
-```
-
-
--b43d-90017e6c06a0)
+![d2-after](https://github.com/user-attachments/assets/1690de37-2ad3-44ce-b43d-90017e6c06a0)
 
 #### 🗑️ Delete Query 3: Remove maintenance records of specific Server
 
