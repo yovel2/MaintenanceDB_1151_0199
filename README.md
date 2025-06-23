@@ -1,6 +1,4 @@
-בטח! הנה README שלך עם כותרות מסודרות היטב והיררכיה נכונה של כותרות Markdown (מ-# עד ###) לפי התוכן שסיפקת:
 
-```markdown
 # 👥 Team:
 
 Yair Levi - 213200199  
