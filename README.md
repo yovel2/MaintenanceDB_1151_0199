@@ -318,7 +318,7 @@ We added 3 types of constraints (NOT NULL, CHECK, DEFAULT) using ALTER TABLE.
 
 ---
 
-# Netflix Project: maintenance - Phase C Report
+# Phase C Report
 
 ## 📑 Table of Contents
 
