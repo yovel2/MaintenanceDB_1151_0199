@@ -565,8 +565,13 @@ $$;
 
 ### 📸 Screenshots
 
-* **Before Execution:** *\[Insert screenshot of `worker` table before]*
-* **After Execution:** See Main Program 1
+* **Before Execution:**
+
+![before-func1](https://github.com/user-attachments/assets/1131c8f4-f169-4778-85fe-394613e282ea)
+
+* **After Execution:**
+  
+![after-func1](https://github.com/user-attachments/assets/04811aa5-c48c-4d67-9fa8-553bfe43cc64)
 
 ---
 
@@ -625,8 +630,8 @@ $$;
 
 ### 📸 Screenshots
 
-* **Before Execution:** *\[Insert screenshot of `servers` and `networkusage`]*
-* **After Execution:** See Main Program 1
+no changes was made in this procedure - report only.
+* **Execution:** See in Main Program 1
 
 ---
 
@@ -662,7 +667,7 @@ $$ LANGUAGE plpgsql;
 
 ### 📸 Screenshot: Execution Output
 
-* *\[Insert screenshot of NOTICE logs + updated `worker` table]*
+![main1](https://github.com/user-attachments/assets/5183ac5c-a72d-4dc5-8503-65c2720401d9)
 
 ---
 
@@ -721,8 +726,14 @@ $$;
 
 ### 📸 Screenshots
 
-* **Before Execution:** *\[Insert screenshot of `servers` table with initial RAM values]*
-* **After Execution:** See Main Program 2
+* **Before Execution:**
+
+![before-func2](https://github.com/user-attachments/assets/00512eed-c41f-4f7c-bc7f-9b988e8f1fa1)
+
+* **After Execution:**
+
+![after-func2](https://github.com/user-attachments/assets/c82990ce-0784-45db-be93-1a9f3bb6fb29)
+
 
 ---
 
@@ -784,8 +795,15 @@ $$;
 
 ### 📸 Screenshots
 
-* **Before Execution:** *\[Insert screenshot of `datacenters` table with statuses]*
-* **After Execution:** See Main Program 2
+* **Before Execution:**
+
+![before-prosedure2](https://github.com/user-attachments/assets/04d10f6b-3874-43c5-b3b4-56308cf20aa6)
+
+  
+* **After Execution:**
+
+![after-prosedure2](https://github.com/user-attachments/assets/2b803841-3968-446a-8c53-cfa80406c75c)
+
 
 ---
 
@@ -823,7 +841,7 @@ $$ LANGUAGE plpgsql;
 
 ### 📸 Screenshot: Execution Output
 
-* *\[Insert screenshot of upgraded `servers` RAM + updated `datacenters` statuses]*
+![main2](https://github.com/user-attachments/assets/f5543a52-d3eb-48d1-87f3-135846e5824c)
 
 ---
 
