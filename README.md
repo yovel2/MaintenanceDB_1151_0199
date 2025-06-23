@@ -494,3 +494,410 @@ Created reusable views for common business queries
 ---
 
 ✅ End of Phase C Report
+
+
+# 📦 Phase D – PL/pgSQL Programming
+
+In this phase, we developed and demonstrated advanced PL/pgSQL programs based on our extended database from previous stages. The programs include:
+
+* Two **functions**
+* Two **procedures**
+* Two **triggers**
+* Two **main programs** that execute a function and a procedure each
+
+Each program includes a description, full code, and demonstration (with screenshots before and after execution where relevant).
+
+---
+
+## 🔁 Function 1: `fn_fire_lazy_agents()`
+
+### 🧾 Description
+
+This function identifies support workers whose average ticket response time exceeds 105 days, logs their details, and removes them from the `worker` table. It returns a result table listing all fired agents with their ID, name, and average response time.
+
+### 💡 Programming Features
+
+* Uses an **explicit cursor** to loop through slow workers
+* Performs a **DELETE** operation on each
+* Uses **record variables** and **RETURN NEXT** for table output
+* Includes **RAISE NOTICE** for logging
+
+### 📜 Code
+
+```sql
+CREATE OR REPLACE FUNCTION public.fn_fire_lazy_agents()
+RETURNS TABLE(worker_id integer, worker_name text, avg_response numeric) 
+LANGUAGE plpgsql AS $$
+DECLARE
+    lazy_agent RECORD;
+    lazy_agents CURSOR FOR
+        SELECT sr.worker_id, 
+               w.worker_name,
+               ROUND(AVG(sr.response_date - st.ticket_date)::NUMERIC, 2) AS avg_response
+        FROM support_responses sr
+        JOIN support_tickets st ON sr.ticket_id = st.ticket_id
+        JOIN worker w ON sr.worker_id = w.worker_id
+        GROUP BY sr.worker_id, w.worker_name
+        HAVING AVG(sr.response_date - st.ticket_date) > 105;
+BEGIN
+    OPEN lazy_agents;
+
+    LOOP
+        FETCH lazy_agents INTO lazy_agent;
+        EXIT WHEN NOT FOUND;
+
+        RAISE NOTICE 'Firing agent % (%), avg response %', 
+                     lazy_agent.worker_id, lazy_agent.worker_name, lazy_agent.avg_response;
+
+        DELETE FROM worker
+        WHERE worker_id = lazy_agent.worker_id;
+
+        worker_id := lazy_agent.worker_id;
+        worker_name := lazy_agent.worker_name;
+        avg_response := lazy_agent.avg_response;
+        RETURN NEXT;
+    END LOOP;
+
+    CLOSE lazy_agents;
+END;
+$$;
+```
+
+### 📸 Screenshots
+
+* **Before Execution:** *\[Insert screenshot of `worker` table before]*
+* **After Execution:** See Main Program 1
+
+---
+
+## 🛠 Procedure 1: `pr_report_traffic_status()`
+
+### 🧾 Description
+
+This procedure calculates the average traffic load (incoming + outgoing) for each server and reports its load level via `NOTICE`. The status is categorized as:
+
+* HIGH LOAD: over 1000 Mbps
+* UNDERUTILIZED: under 100 Mbps
+* NORMAL: between 100–1000 Mbps
+
+### 💡 Programming Features
+
+* Uses **FOR loop** over query result
+* Includes **conditional branching (IF / ELSIF / ELSE)**
+* Uses **RAISE NOTICE** for categorized reporting
+
+### 📜 Code
+
+```sql
+CREATE OR REPLACE PROCEDURE public.pr_report_traffic_status()
+LANGUAGE plpgsql AS $$
+DECLARE
+    srv RECORD;
+    avg_traffic FLOAT;
+BEGIN
+    RAISE NOTICE '--- ריכוז מצב התעבורה לפי שרתים ---';
+
+    FOR srv IN
+        SELECT s.serverid, s.ipaddress, dc.name AS datacenter_name,
+               AVG(nu.inboundtraffic + nu.outboundtraffic) AS avg_traffic
+        FROM servers s
+        JOIN datacenters dc ON s.datacenterid = dc.datacenterid
+        JOIN networkusage nu ON s.serverid = nu.serverid
+        GROUP BY s.serverid, s.ipaddress, dc.name
+    LOOP
+        avg_traffic := srv.avg_traffic;
+
+        IF avg_traffic > 1000 THEN
+            RAISE NOTICE '🔴 Server % (% - %): HIGH LOAD (%.2f Mbps)', srv.serverid, srv.ipaddress, srv.datacenter_name, avg_traffic;
+
+        ELSIF avg_traffic < 100 THEN
+            RAISE NOTICE '🟡 Server % (% - %): UNDERUTILIZED (%.2f Mbps)', srv.serverid, srv.ipaddress, srv.datacenter_name, avg_traffic;
+
+        ELSE
+            RAISE NOTICE '🟢 Server % (% - %): NORMAL TRAFFIC (%.2f Mbps)', srv.serverid, srv.ipaddress, srv.datacenter_name, avg_traffic;
+        END IF;
+    END LOOP;
+
+    RAISE NOTICE '--- סוף הדוח ---';
+END;
+$$;
+```
+
+### 📸 Screenshots
+
+* **Before Execution:** *\[Insert screenshot of `servers` and `networkusage`]*
+* **After Execution:** See Main Program 1
+
+---
+
+## 🚀 Main Program 1: Firing Lazy Agents and Traffic Report
+
+### 🧾 Description
+
+This main program runs the `fn_fire_lazy_agents()` function and `pr_report_traffic_status()` procedure in sequence. It logs each fired agent and prints the traffic report for all servers.
+
+### 📜 Code
+
+```sql
+DO $$
+DECLARE
+    lazy_agent RECORD;
+BEGIN
+    RAISE NOTICE '📋 התחלת הרצת פונקציה fn_fire_lazy_agents()';
+
+    FOR lazy_agent IN SELECT * FROM fn_fire_lazy_agents() LOOP
+        RAISE NOTICE '💥 פוטר עובד: ID=%, שם=%, זמן תגובה ממוצע=% ימים',
+                     lazy_agent.worker_id, lazy_agent.worker_name, lazy_agent.avg_response;
+    END LOOP;
+
+    RAISE NOTICE '✅ סיום הרצת הפונקציה';
+    RAISE NOTICE '📊 התחלת הרצת פרוצדורה pr_report_traffic_status()';
+
+    CALL pr_report_traffic_status();
+
+    RAISE NOTICE '✅ סיום הרצת הפרוצדורה';
+END;
+$$ LANGUAGE plpgsql;
+```
+
+### 📸 Screenshot: Execution Output
+
+* *\[Insert screenshot of NOTICE logs + updated `worker` table]*
+
+---
+
+## 🔁 Function 2: `fn_upgrade_low_performance_servers()`
+
+### 🧾 Description
+
+This function locates servers in active data centers with poor network performance (high latency and packet loss) and increases their RAM by 10%. It returns the number of upgraded servers.
+
+### 💡 Programming Features
+
+* Uses **subqueries** and **EXISTS** condition
+* Performs **UPDATE** operation
+* Uses **EXCEPTION handling** to catch failures
+
+### 📜 Code
+
+```sql
+CREATE OR REPLACE FUNCTION public.fn_upgrade_low_performance_servers()
+RETURNS integer
+LANGUAGE plpgsql AS $$
+DECLARE
+    srv RECORD;
+    upgraded_count INT := 0;
+BEGIN
+    FOR srv IN
+        SELECT s.serverid
+        FROM servers s
+        JOIN datacenters dc ON s.datacenterid = dc.datacenterid
+        WHERE dc.status = 'Active'
+          AND EXISTS (
+              SELECT 1
+              FROM networkusage nu
+              WHERE nu.serverid = s.serverid
+                AND (
+                    nu.averagelatency > 250   
+                    AND nu.packetloss > 4    
+                )
+          )
+    LOOP
+        UPDATE servers
+        SET ram = (ram * 1.1)::INT
+        WHERE serverid = srv.serverid;
+
+        upgraded_count := upgraded_count + 1;
+    END LOOP;
+
+    RETURN upgraded_count;
+
+EXCEPTION WHEN OTHERS THEN
+    RAISE NOTICE 'Could not upgrade server RAM: %', SQLERRM;
+    RETURN -1;
+END;
+$$;
+```
+
+### 📸 Screenshots
+
+* **Before Execution:** *\[Insert screenshot of `servers` table with initial RAM values]*
+* **After Execution:** See Main Program 2
+
+---
+
+## 🛠 Procedure 2: `pr_monitor_extreme_traffic()`
+
+### 🧾 Description
+
+This procedure checks each data center’s servers. If average traffic exceeds 800 Mbps and the data center is active, its status is updated to `Overloaded`. If traffic falls below threshold and the status is `Overloaded`, it is reset to `Active`.
+
+### 💡 Programming Features
+
+* Uses **FOR loop**
+* Includes **nested conditional branching**
+* Performs **UPDATE** based on traffic load
+* Contains **exception handling per iteration**
+
+### 📜 Code
+
+```sql
+CREATE OR REPLACE PROCEDURE public.pr_monitor_extreme_traffic()
+LANGUAGE plpgsql AS $$
+DECLARE
+    srv RECORD;
+    avg_traffic FLOAT;
+BEGIN
+    FOR srv IN
+        SELECT s.serverid, dc.datacenterid, dc.status,
+               AVG(nu.inboundtraffic + nu.outboundtraffic) AS avg_traffic
+        FROM servers s
+        JOIN datacenters dc ON s.datacenterid = dc.datacenterid
+        JOIN networkusage nu ON s.serverid = nu.serverid
+        GROUP BY s.serverid, dc.datacenterid, dc.status
+    LOOP
+        BEGIN
+            avg_traffic := srv.avg_traffic;
+
+            IF avg_traffic > 800 AND srv.status = 'Active' THEN
+                UPDATE datacenters
+                SET status = 'Overloaded'
+                WHERE datacenterid = srv.datacenterid;
+
+                RAISE NOTICE 'DataCenter % marked as Overloaded due to server % with avg traffic % Mbps.', srv.datacenterid, srv.serverid, avg_traffic;
+
+            ELSIF avg_traffic <= 800 AND srv.status = 'Overloaded' THEN
+                UPDATE datacenters
+                SET status = 'Active'
+                WHERE datacenterid = srv.datacenterid;
+
+                RAISE NOTICE 'DataCenter % status returned to Active - traffic normalized (server %).', srv.datacenterid, srv.serverid;
+            END IF;
+
+        EXCEPTION WHEN OTHERS THEN
+            RAISE NOTICE 'Error processing server % in DataCenter %: %', srv.serverid, srv.datacenterid, SQLERRM;
+        END;
+    END LOOP;
+END;
+$$;
+```
+
+### 📸 Screenshots
+
+* **Before Execution:** *\[Insert screenshot of `datacenters` table with statuses]*
+* **After Execution:** See Main Program 2
+
+---
+
+## 🚀 Main Program 2: Server Upgrade and Monitoring
+
+### 🧾 Description
+
+This program upgrades servers with poor performance and monitors data centers’ traffic levels, modifying their statuses accordingly.
+
+### 📜 Code
+
+```sql
+DO $$
+DECLARE
+    upgraded_servers_count INT;
+BEGIN
+    RAISE NOTICE '🔧 התחלת שדרוג שרתים בעלי ביצועים נמוכים';
+
+    upgraded_servers_count := fn_upgrade_low_performance_servers();
+
+    IF upgraded_servers_count >= 0 THEN
+        RAISE NOTICE '✅ סיום שדרוג: % שרתים שודרגו', upgraded_servers_count;
+    ELSE
+        RAISE NOTICE '⚠️ קרתה שגיאה בשדרוג השרתים';
+    END IF;
+
+    RAISE NOTICE '📡 התחלת ניטור תעבורת קצה';
+
+    CALL pr_monitor_extreme_traffic();
+
+    RAISE NOTICE '✅ סיום ניטור תעבורת קצה';
+END;
+$$ LANGUAGE plpgsql;
+```
+
+### 📸 Screenshot: Execution Output
+
+* *\[Insert screenshot of upgraded `servers` RAM + updated `datacenters` statuses]*
+
+---
+
+## 🧩 Triggers
+
+### 🔒 Trigger 1: Prevent Overcapacity
+
+**Name:** `trg_prevent_over_capacity`
+**Table:** `servers`
+**Event:** `BEFORE INSERT`
+
+### 📜 Code
+
+```sql
+CREATE OR REPLACE FUNCTION fn_prevent_over_capacity()
+RETURNS TRIGGER AS $$
+DECLARE
+    srv_count INT;
+    dc_capacity INT;
+BEGIN
+    SELECT COUNT(*), dc.capacity
+    INTO srv_count, dc_capacity
+    FROM servers s
+    JOIN datacenters dc ON s.datacenterid = dc.datacenterid
+    WHERE s.datacenterid = NEW.datacenterid;
+
+    IF srv_count >= dc_capacity THEN
+        RAISE EXCEPTION 'Cannot add server. DataCenter % is at full capacity (% servers).', NEW.datacenterid, dc_capacity;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_prevent_over_capacity
+BEFORE INSERT ON servers
+FOR EACH ROW
+EXECUTE FUNCTION fn_prevent_over_capacity();
+```
+
+### 🧾 Description
+
+Prevents adding new servers to a data center if the number of servers already equals or exceeds its defined capacity.
+
+---
+
+### ⚙ Trigger 2: Upgrade Servers After Maintenance
+
+**Name:** `trg_upgrade_servers_after_maintenance`
+**Table:** `maintenancerecords`
+**Event:** `AFTER INSERT`
+
+### 📜 Code
+
+```sql
+CREATE OR REPLACE FUNCTION fn_trigger_upgrade_servers()
+RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM fn_upgrade_low_performance_servers();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_upgrade_servers_after_maintenance
+AFTER INSERT ON maintenancerecords
+FOR EACH ROW
+EXECUTE FUNCTION fn_trigger_upgrade_servers();
+```
+
+### 🧾 Description
+
+Automatically upgrades servers with low performance each time a new maintenance record is added.
+
+---
+
+✅ End of Phase D Report
+
