@@ -974,42 +974,52 @@ The application follows a modular MVC-like structure. Each table (e.g., Servers,
 ### 🤭 Main Application Window
 
 📸 Screenshot: Main window with sidebar and welcome message.  
+
 ![צילום מסך 2025-07-02 120738](https://github.com/user-attachments/assets/8f60c0be-8ca1-4156-a351-167fdce93bd6)
 
 
 ### 🏢 DataCenters View
 
 📸 Screenshot: List of data centers with sorting, searching, and CRUD buttons.  
+
 ![צילום מסך 2025-07-02 120835](https://github.com/user-attachments/assets/875c11d3-a3dc-481c-a181-3962236be13a)
 
 
 📸 Screenshot: Add new data center popup with status dropdown constraint.  
+
 ![datacenter](https://github.com/user-attachments/assets/ec900104-28ba-41bc-b9c7-d8b34a054714)
 
 
 ### 💥 Servers View
 
 📸 Screenshot: Servers table, including advanced sorting, filtering, and real-time refresh.  
+
 ![צילום מסך 2025-07-02 121226](https://github.com/user-attachments/assets/a848ff2d-5947-4250-b250-b65d6888346d)
 
 📸 Screenshot: Add new server popup with drop-downs for foreign keys and status.  
-![צילום מסך 2025-07-02 121038](https://github.com/user-attachments/assets/b9d643e5-0e19-449d-9ae5-6f85b9c49f80)
+
+![צילום מסך 2025-07-02 121602](https://github.com/user-attachments/assets/59914121-d5a3-4e8b-9033-0e255759ae12)
 
 
 ### 📺 Streaming Sessions View
 
 📸 Screenshot: View for all active and past sessions.  
+
 ![image](https://github.com/user-attachments/assets/c440819c-6449-4fc1-8733-e8ffc46ceafc)
 
 
 ### 🧪 Functions & Query Runner
 
 📸 Screenshot: Free query execution window and procedure launcher.  
+
 ![image](https://github.com/user-attachments/assets/b3dd6b55-1dd3-4cf5-805e-bbefab3bcbdb)
 
 
 ---
 
 ✅ End of Phase E Report
+
+
+✅✅✅ End of this freaking project!
 
 
